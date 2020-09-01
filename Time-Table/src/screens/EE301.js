@@ -33,6 +33,11 @@ export default class EE301 extends Component {
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
                     shakthi@iitgoa.ac.in
                 </Text>
+                <Text 
+                onPress={() => Linking.openURL('https://classroom.google.com/u/0/c/MTUzMjIxMDkxNDk1')}
+                style = {{color : '#0044ff' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
+                    Classroom Link
+                </Text>
               </Body>
             </CardItem>
             <CardItem>

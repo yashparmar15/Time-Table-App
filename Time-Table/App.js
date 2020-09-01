@@ -7,6 +7,7 @@ import EE229 from './src/screens/EE229';
 import EE308 from './src/screens/EE308';
 import EE325 from './src/screens/EE325';
 import HS301 from './src/screens/HS301';
+import TT from './src/screens/TT';
 const navigator = createStackNavigator({
   Home : HomeScreen,
   Courses : CourseList,
@@ -15,6 +16,7 @@ const navigator = createStackNavigator({
   EE325 : EE325,
   EE308 : EE308,
   HS301 : HS301,
+  TT : TT,
 },{
   initialRouteName : 'Home',
   defaultNavigationOptions : {

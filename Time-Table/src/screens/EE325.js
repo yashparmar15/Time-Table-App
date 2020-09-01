@@ -33,6 +33,11 @@ export default class EE325 extends Component {
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
                     kuntal@iitgoa.ac.in
                 </Text>
+                <Text 
+                onPress={() => Linking.openURL('https://www.youtube.com/watch?v=s52Ft_kwR9Y')}
+                style = {{color : '#0033ff' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
+                    Youtube Link
+                </Text>
               </Body>
             </CardItem>
             <CardItem>

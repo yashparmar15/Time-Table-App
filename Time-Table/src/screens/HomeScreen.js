@@ -62,6 +62,7 @@ export default class HomeScreen extends Component{
                          IIT Goa
                     </Text> 
                 </Text>
+                
                 <View style={{flexDirection: 'row', alignItems: 'center',marginBottom : 20}}>
                     <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
                     <View>
@@ -69,6 +70,8 @@ export default class HomeScreen extends Component{
                     </View>
                     <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
                     </View>
+                    <Text onPress = {() => this.props.navigation.navigate('TT')}
+                     style = {{marginTop : -15,textAlign : 'center' , fontWeight : 'bold',textDecorationLine :'underline'}}>View Full Time-Table</Text>
                 <Container>
                     {/* <Header /> */}
                     
