@@ -79,7 +79,7 @@ export default class CourseList extends Component {
             </ListItem>
           </List>
           <TouchableOpacity 
-                onPress = {() => this.props.navigation.navigate('Courses')}
+                onPress = {() => this.props.navigation.navigate('Home')}
                 style = {{marginTop : 100 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
         </Content>
       </Container>
