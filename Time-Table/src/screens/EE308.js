@@ -12,7 +12,7 @@ export default class EE308 extends Component {
           <Card style={{flex: 0}}>
             <CardItem>
               <Left>
-                <Thumbnail source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} />
+                <Thumbnail source={require('../../assets/nr.jpeg')} />
                 <Body>
                   <Text>Dr. Neelakandan Rajamohan</Text>
                   <Text note>Assistant Professor</Text>
@@ -21,7 +21,7 @@ export default class EE308 extends Component {
             </CardItem>
             <CardItem>
               <Body>
-                <Image source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
+                <Image source={require('../../assets/nr.jpeg')} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
                 <Text style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 20 , alignSelf : 'center' , fontWeight : 'bold'}}>
                   Electrical Engineering Department
                 </Text>
@@ -29,7 +29,7 @@ export default class EE308 extends Component {
                 Address: F-12 (Lab 1), Academic Block A
                 </Text>
                 <Text 
-                onPress={() => Linking.openURL('shakthi@iitgoa.ac.in')}
+                onPress={() => Linking.openURL('mailto:neelakandan@iitgoa.ac.in')}
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
                     neelakandan@iitgoa.ac.in
                 </Text>

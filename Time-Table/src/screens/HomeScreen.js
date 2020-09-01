@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {StyleSheet ,TouchableOpacity , FlatList} from 'react-native';
+import {StyleSheet ,TouchableOpacity , FlatList , Linking} from 'react-native';
 import { Container, Header, Content, Icon, Accordion, Text, View} from "native-base";
 
 const dataArray = [
-  { title: "Monday", content: [{ code : "EE308" , name : "10:15 AM - 11:15 AM    EE308"},{code : "HS301",name : "3:15 PM - 4:15 PM        HS301"}] },
+  { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
   { title: "Tuesday", content: ["9:00 AM - 10:00 AM        EE229","10:15 AM - 11:15 AM     EE301","2:00 PM - 3:00 PM         EE325","3:15 PM - 4:15 PM        HS301"] },
   { title: "Wednesday", content: ["10:15 AM - 11:15 AM     EE301","11:30 AM - 12:30 PM    EE308","3:15 PM - 4:15 PM        HS301"] },
   { title: "Thrusday", content: ["9:00 AM - 10:00 AM        EE229","11:30 AM - 12:30 PM     EE325","2:00 PM - 3:00 PM         EE301"] },
@@ -38,14 +38,14 @@ export default class HomeScreen extends Component{
             data = {item.content}
             renderItem = {({item}) => {
                 return (
-                    <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE301')}>
+                    <TouchableOpacity>
                         <Text
                             style={{
                                 backgroundColor: "#e3f1f1",
                                 padding: 10,
                                 fontStyle: "italic",
                               }}    
-                        >{item.name}</Text>
+                        >{item}</Text>
                     </TouchableOpacity>
                 )
             }}

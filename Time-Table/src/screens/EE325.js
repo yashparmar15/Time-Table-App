@@ -12,7 +12,7 @@ export default class EE325 extends Component {
           <Card style={{flex: 0}}>
             <CardItem>
               <Left>
-                <Thumbnail source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} />
+                <Thumbnail source={require('../../assets/kd.jpeg')} />
                 <Body>
                   <Text>Dr. Kuntal Deka</Text>
                   <Text note>Assistant Professor</Text>
@@ -21,7 +21,7 @@ export default class EE325 extends Component {
             </CardItem>
             <CardItem>
               <Body>
-                <Image source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
+                <Image source={require('../../assets/kd.jpeg')} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
                 <Text style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 20 , alignSelf : 'center' , fontWeight : 'bold'}}>
                   Electrical Engineering Department
                 </Text>
@@ -29,7 +29,7 @@ export default class EE325 extends Component {
                 Electrical Laboratory, IIT Goa
                 </Text>
                 <Text 
-                onPress={() => Linking.openURL('shakthi@iitgoa.ac.in')}
+                onPress={() => Linking.openURL('mailto:kuntal@iitgoa.ac.in')}
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
                     kuntal@iitgoa.ac.in
                 </Text>

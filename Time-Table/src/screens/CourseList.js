@@ -23,7 +23,7 @@ export default class CourseList extends Component {
             </ListItem>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ' }} />
+                <Thumbnail square source={require('../../assets/kd.jpeg')} />
               </Left>
               <Body>
                 <Text>Probability and Random Processes</Text>
@@ -37,7 +37,7 @@ export default class CourseList extends Component {
             </ListItem>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ' }} />
+                <Thumbnail square source={require('../../assets/nr.jpeg')} />
               </Left>
               <Body>
                 <Text>Communication Systems</Text>
@@ -51,7 +51,7 @@ export default class CourseList extends Component {
             </ListItem>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ' }} />
+                <Thumbnail square source={require('../../assets/sf.jpeg')} />
               </Left>
               <Body>
                 <Text>Power Electronics</Text>
@@ -65,7 +65,7 @@ export default class CourseList extends Component {
             </ListItem>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ' }} />
+                <Thumbnail square source={require('../../assets/sh.png')} />
               </Left>
               <Body>
                 <Text>Language and Society</Text>

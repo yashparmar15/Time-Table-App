@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image , View } from 'react-native';
+import { Image , View , Linking } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class EE301 extends Component {
@@ -29,7 +29,7 @@ export default class EE301 extends Component {
                 Address: F-17, Academic Block B
                 </Text>
                 <Text 
-                onPress={() => Linking.openURL('shakthi@iitgoa.ac.in')}
+                onPress={() => Linking.openURL('mailto:shakthi@iitgoa.ac.in')}
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
                     shakthi@iitgoa.ac.in
                 </Text>
