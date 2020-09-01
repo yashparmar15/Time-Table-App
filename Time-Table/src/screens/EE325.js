@@ -2,36 +2,36 @@ import React, { Component } from 'react';
 import { Image , View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-export default class EE301 extends Component {
+export default class EE325 extends Component {
   render() {
     return (
     <View style = {{flex : 1 , backgroundColor : '#fff'}}>
-        <Text style = {{marginBottom : 20 , marginTop : 20 , textAlign : 'center' , fontSize : 25 , fontWeight : 'bold', textDecorationLine : 'underline'}}>Electromagnative Waves</Text>
+        <Text style = {{marginBottom : 20 , marginTop : 20 , textAlign : 'center' , fontSize : 25 , fontWeight : 'bold', textDecorationLine : 'underline'}}>Probability and Random Processes</Text>
       <Container style = {{paddingTop : 10}}>
         <Content>
           <Card style={{flex: 0}}>
             <CardItem>
               <Left>
-                <Thumbnail source={require('../../assets/sp.jpeg')} />
+                <Thumbnail source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} />
                 <Body>
-                  <Text>Dr. Shakthi Prasad D</Text>
+                  <Text>Dr. Kuntal Deka</Text>
                   <Text note>Assistant Professor</Text>
                 </Body>
               </Left>
             </CardItem>
             <CardItem>
               <Body>
-                <Image source={require('../../assets/sp.jpeg')} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
+                <Image source={{uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ'}} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50}}/>
                 <Text style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 20 , alignSelf : 'center' , fontWeight : 'bold'}}>
                   Electrical Engineering Department
                 </Text>
                 <Text style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 18 , alignSelf : 'center' , fontWeight : 'bold' , }}>
-                Address: F-17, Academic Block B
+                Electrical Laboratory, IIT Goa
                 </Text>
                 <Text 
                 onPress={() => Linking.openURL('shakthi@iitgoa.ac.in')}
                 style = {{color : '#334455' , marginTop : 10 , textAlign : 'center',fontSize : 16 , alignSelf : 'center' , fontWeight : '500' , textDecorationLine : 'underline' , fontStyle : 'italic'}}>
-                    shakthi@iitgoa.ac.in
+                    kuntal@iitgoa.ac.in
                 </Text>
               </Body>
             </CardItem>

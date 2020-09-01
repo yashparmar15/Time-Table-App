@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {StyleSheet ,TouchableOpacity , FlatList} from 'react-native';
 import { Container, Header, Content, Icon, Accordion, Text, View} from "native-base";
+
 const dataArray = [
-  { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
+  { title: "Monday", content: [{ code : "EE308" , name : "10:15 AM - 11:15 AM    EE308"},{code : "HS301",name : "3:15 PM - 4:15 PM        HS301"}] },
   { title: "Tuesday", content: ["9:00 AM - 10:00 AM        EE229","10:15 AM - 11:15 AM     EE301","2:00 PM - 3:00 PM         EE325","3:15 PM - 4:15 PM        HS301"] },
   { title: "Wednesday", content: ["10:15 AM - 11:15 AM     EE301","11:30 AM - 12:30 PM    EE308","3:15 PM - 4:15 PM        HS301"] },
   { title: "Thrusday", content: ["9:00 AM - 10:00 AM        EE229","11:30 AM - 12:30 PM     EE325","2:00 PM - 3:00 PM         EE301"] },
   { title: "Friday", content: ["9:00 AM - 10:00 AM        EE229","10:15 AM - 11:15 AM     EE308","11:30 AM - 12:30 PM     EE325"] }
 ];
 
-class HomeScreen extends Component{
+export default class HomeScreen extends Component{
+    
     _renderHeader(item, expanded) {
         return (
           <View style={{
@@ -28,6 +30,7 @@ class HomeScreen extends Component{
         );
       }
       _renderContent(item) {
+          
         return (
             <FlatList
             style = {{marginBottom : 10,marginTop : 10}}
@@ -35,14 +38,14 @@ class HomeScreen extends Component{
             data = {item.content}
             renderItem = {({item}) => {
                 return (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE301')}>
                         <Text
                             style={{
                                 backgroundColor: "#e3f1f1",
                                 padding: 10,
                                 fontStyle: "italic",
                               }}    
-                        >{item}</Text>
+                        >{item.name}</Text>
                     </TouchableOpacity>
                 )
             }}
@@ -54,7 +57,7 @@ class HomeScreen extends Component{
             <View style = {styles.container}>
                 <Text style = {styles.heading}>Electrical Engineering</Text>
                 <Text style = {styles.batch}>Batch 2018{' '} 
-                     <Text style={{color: 'blue' , textDecorationLine : 'underline'}}
+                     <Text style={{color: 'blue' , textDecorationLine : 'underline' , fontWeight : 'bold'}}
                         onPress={() => Linking.openURL('https://www.iitgoa.ac.in/')}>
                          IIT Goa
                     </Text> 
@@ -106,4 +109,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeScreen;

@@ -9,14 +9,14 @@ export default class CourseList extends Component {
           <List>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ' }} />
+                <Thumbnail square source={require('../../assets/sp.jpeg')} />
               </Left>
               <Body>
                 <Text>Electromagnetic Waves</Text>
                 <Text note numberOfLines={1}>Dr. Shakti Prasad D (EE301)</Text>
               </Body>
               <Right>
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE301')}>
                   <Text style = {{color :  '#00a0bb'}}>View</Text>
                 </TouchableOpacity>
               </Right>
@@ -30,7 +30,7 @@ export default class CourseList extends Component {
                 <Text note numberOfLines={1}>Dr. Kuntal Deka (EE325)</Text>
               </Body>
               <Right>
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE325')}>
                   <Text style = {{color :  '#00a0bb'}}>View</Text>
                 </TouchableOpacity>
               </Right>
@@ -44,7 +44,7 @@ export default class CourseList extends Component {
                 <Text note numberOfLines={1}>Dr. Neelakandan Rajamohan (EE308)</Text>
               </Body>
               <Right>
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE308')}>
                   <Text style = {{color :  '#00a0bb'}}>View</Text>
                 </TouchableOpacity>
               </Right>
@@ -58,7 +58,7 @@ export default class CourseList extends Component {
                 <Text note numberOfLines={1}>Dr. Sheron Fegarado (EE229)</Text>
               </Body>
               <Right>
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate('EE229')}>
                   <Text style = {{color :  '#00a0bb'}}>View</Text>
                 </TouchableOpacity>
               </Right>
@@ -72,7 +72,7 @@ export default class CourseList extends Component {
                 <Text note numberOfLines={1}>Dr. Sabiha Hashmi (HS301)</Text>
               </Body>
               <Right>
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate('HS301')}>
                   <Text style = {{color :  '#00a0bb'}}>View</Text>
                 </TouchableOpacity>
               </Right>
