@@ -5,6 +5,7 @@ export default class CourseList extends Component {
   render() {
     return (
       <Container>
+          <Text style = {{fontSize : 25 , textAlign : 'center' , fontWeight : 'bold' , marginBottom : 30 , marginTop : 30}}>Courses and Instructors</Text>
         <Content>
           <List>
             <ListItem thumbnail>
