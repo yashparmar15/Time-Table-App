@@ -18,10 +18,8 @@ const navigator = createStackNavigator({
   HS301 : HS301,
   TT : TT,
 },{
-  initialRouteName : 'Home',
-  defaultNavigationOptions : {
-    title : 'Time Table'
-  }
-});
+  headerMode : 'none'
+}
+);
 
 export default createAppContainer(navigator);
