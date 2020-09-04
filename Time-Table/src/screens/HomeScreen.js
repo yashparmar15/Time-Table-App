@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {StyleSheet ,TouchableOpacity , FlatList , Linking} from 'react-native';
-import { Container, Content, Icon, Accordion, Text, View} from "native-base";
+import { Container, Content, Icon, Accordion, Text, View  , Button} from "native-base";
 import Firebase from '../components/utils/firebase';
 import { Feather } from '@expo/vector-icons';
 import Headers from '../components/Header';
+import FooterTab from '../components/Footer';
 
 const dataArray = [
   { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
@@ -14,7 +15,6 @@ const dataArray = [
 ];
 
 export default class HomeScreen extends Component{
-
     componentWillMount(){
        Firebase.database().ref('users/001').set({
            name : "Yash Parmar",
@@ -76,7 +76,7 @@ export default class HomeScreen extends Component{
       render() {
         return (
             <View style = {styles.container}>
-                <Headers title = "Time Table"/>
+                <Headers title = "Time Table" navigation = {this.props.navigation}/>
                 <Text style = {styles.heading}>Electrical Engineering</Text>
                 <Text style = {styles.batch}>Batch 2018{' '} 
                      <Text style={{color: 'blue' , textDecorationLine : 'underline' , fontWeight : 'bold'}}
@@ -108,7 +108,8 @@ export default class HomeScreen extends Component{
                     </Content>
                     <TouchableOpacity 
                         onPress = {() => this.props.navigation.navigate('Courses')}
-                        style = {{marginBottom : 100 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 180 , borderRadius : 30}}>Check Details</Text></TouchableOpacity>
+                        style = {{marginBottom : 50 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 180 , borderRadius : 30}}>Check Details</Text></TouchableOpacity>
+                    <FooterTab/>
                 </Container>
             </View>
         );
