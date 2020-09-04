@@ -33,6 +33,19 @@ export default class FeedbackScreen extends Component {
               })
             return;
         }
+        var name = this.state.name;
+        for(let i = 0 ; i < name.length ; i++){
+            if(!((name[i] >= 'a' && name[i] <= 'z') || (name[i] >= 'A' && name[i] <= 'Z'))){
+                Toast.show({
+                    text: "Incorrect Name",
+                    textStyle: { color: "yellow" },
+                    buttonText: "Okay",
+                    duration : 5000
+                  })
+                return;
+            }
+
+        }
         var count = 0;
         Firebase.database().ref('feedback').once('value' , data => {
             count = data.numChildren();
@@ -73,7 +86,7 @@ export default class FeedbackScreen extends Component {
             />
             <Button title = "Submit" color = "black" onPress = {() => this.submitFeedback() }/>
         </Content>
-        <Footer />
+        <Footer navigation = {this.props.navigation}/>
       </Container>
       </Root>
     );

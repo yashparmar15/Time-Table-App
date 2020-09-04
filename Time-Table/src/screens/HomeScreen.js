@@ -87,7 +87,7 @@ export default class HomeScreen extends Component{
                 </Text>
                 <LineBreak text = "Semester V" w = {100}/>
                 
-                    <Text onPress = {() => this.props.navigation.navigate('TT')}
+                    <Text onPress = {() => this.props.navigation.navigate('TT' , {navi : this.props.navigation})}
                      style = {{marginTop : -15,textAlign : 'center' , fontWeight : 'bold',textDecorationLine :'underline'}}>View Full Time-Table</Text>
                 <Container>
                     {/* <Header /> */}

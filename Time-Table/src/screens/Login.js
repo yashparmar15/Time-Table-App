@@ -49,7 +49,7 @@ export default class LoginScreen extends Component {
             </Item>
             <Button style = {{marginTop : 20}} color = "black"  title = "Login"  onPress = {() => this.CheckPass()}></Button>
         </Content>
-        <Footer/>
+        <Footer navigation = {this.props.navigation}/>
       </Container>
       </Root>
     );

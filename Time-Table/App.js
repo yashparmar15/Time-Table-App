@@ -18,7 +18,7 @@ const navigator = createStackNavigator({
   EE325 : EE325,
   EE308 : EE308,
   HS301 : HS301,
-  TT : TT,
+  TT : {screen : TT},
   Feedback : FeedbackScreen,
   Login : { screen : LoginScreen},
 },{

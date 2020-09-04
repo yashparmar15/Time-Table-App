@@ -56,7 +56,7 @@ export default class EE301 extends Component {
       <TouchableOpacity 
                 onPress = {() => this.props.navigation.navigate('Courses')}
                 style = {{marginBottom : 20, alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
-      <Footer />
+      <Footer navigation = {this.props.navigation} />
     </View>
     );
   }
