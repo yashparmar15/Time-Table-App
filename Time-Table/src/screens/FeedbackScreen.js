@@ -5,6 +5,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LineBreak from '../components/LineBreak';
 export default class FeedbackScreen extends Component {
+    state = {
+        name : "",
+        message : ""
+    }
   render() {
     return (
         <Container>
