@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Image , View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class EE229 extends Component {
   render() {
     return (
     <View style = {{flex : 1 , backgroundColor : '#fff'}}>
+      <Header navigation = {this.props.navigation} title = "EE229" show = {true}/>
         <Text style = {{marginBottom : 20 , marginTop : 20 , textAlign : 'center' , fontSize : 25 , fontWeight : 'bold', textDecorationLine : 'underline'}}>Power Electronics</Text>
       <Container style = {{paddingTop : 10}}>
         <Content>
@@ -47,7 +50,8 @@ export default class EE229 extends Component {
       </Container>
       <TouchableOpacity 
                 onPress = {() => this.props.navigation.navigate('Courses')}
-                style = {{marginBottom : 100, alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
+                style = {{marginBottom : 20, alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
+      <Footer/>
     </View>
     );
   }

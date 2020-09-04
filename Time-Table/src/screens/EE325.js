@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Image , View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 export default class EE325 extends Component {
   render() {
     return (
     <View style = {{flex : 1 , backgroundColor : '#fff'}}>
-        <Text style = {{marginBottom : 20 , marginTop : 20 , textAlign : 'center' , fontSize : 25 , fontWeight : 'bold', textDecorationLine : 'underline'}}>Probability and Random Processes</Text>
+      <Header show = {true} navigation = {this.props.navigation} title = "EE325" />
+        <Text style = {{marginBottom : 5 , marginTop : 5 , textAlign : 'center' , fontSize : 25 , fontWeight : 'bold', textDecorationLine : 'underline'}}>Probability and Random Processes</Text>
       <Container style = {{paddingTop : 10}}>
         <Content>
           <Card style={{flex: 0}}>
@@ -52,7 +55,8 @@ export default class EE325 extends Component {
       </Container>
       <TouchableOpacity 
                 onPress = {() => this.props.navigation.navigate('Courses')}
-                style = {{marginBottom : 100, alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
+                style = {{marginBottom : 20, alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
+      <Footer/>
     </View>
     );
   }

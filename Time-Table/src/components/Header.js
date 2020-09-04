@@ -31,9 +31,9 @@ export default class HeaderCompo extends Component {
                   <Title>{this.props.title}</Title>
             </Body>
             <Right>
-              <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
+                {this.props.show ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
               <Ionicons name="md-add" size={28} color="white" />
-              </Button>
+              </Button> : null}
             </Right>
           </Header>
           }

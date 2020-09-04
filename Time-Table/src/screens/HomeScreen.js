@@ -76,7 +76,7 @@ export default class HomeScreen extends Component{
       render() {
         return (
             <View style = {styles.container}>
-                <Headers title = "Time Table" navigation = {this.props.navigation}/>
+                <Headers title = "Time Table" navigation = {this.props.navigation} show = {true}/>
                 <Text style = {styles.heading}>Electrical Engineering</Text>
                 <Text style = {styles.batch}>Batch 2018{' '} 
                      <Text style={{color: 'blue' , textDecorationLine : 'underline' , fontWeight : 'bold'}}

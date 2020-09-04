@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {TouchableOpacity} from 'react-native';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 export default class CourseList extends Component {
   render() {
     return (
       <Container>
+        <Header show = {true} title = "Courses List" navigation = {this.props.navigation}/>
           <Text style = {{fontSize : 25 , textAlign : 'center' , fontWeight : 'bold' , marginBottom : 30 , marginTop : 30}}>Courses and Instructors</Text>
         <Content>
           <List>
@@ -81,8 +84,9 @@ export default class CourseList extends Component {
           </List>
           <TouchableOpacity 
                 onPress = {() => this.props.navigation.navigate('Home')}
-                style = {{marginTop : 100 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
+                style = {{marginTop : 80 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
         </Content>
+        <Footer/>
       </Container>
     );
   }
