@@ -5,6 +5,7 @@ import Firebase from '../components/utils/firebase';
 import { Feather } from '@expo/vector-icons';
 import Headers from '../components/Header';
 import FooterTab from '../components/Footer';
+import LineBreak from '../components/LineBreak';
 
 const dataArray = [
   { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
@@ -84,14 +85,8 @@ export default class HomeScreen extends Component{
                          IIT Goa
                     </Text> 
                 </Text>
+                <LineBreak text = "Semester V" w = {100}/>
                 
-                <View style={{flexDirection: 'row', alignItems: 'center',marginBottom : 20}}>
-                    <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
-                    <View>
-                        <Text style={{width: 100, textAlign: 'center'}}>Semester V</Text>
-                    </View>
-                    <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
-                    </View>
                     <Text onPress = {() => this.props.navigation.navigate('TT')}
                      style = {{marginTop : -15,textAlign : 'center' , fontWeight : 'bold',textDecorationLine :'underline'}}>View Full Time-Table</Text>
                 <Container>
@@ -109,7 +104,7 @@ export default class HomeScreen extends Component{
                     <TouchableOpacity 
                         onPress = {() => this.props.navigation.navigate('Courses')}
                         style = {{marginBottom : 50 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 180 , borderRadius : 30}}>Check Details</Text></TouchableOpacity>
-                    <FooterTab/>
+                    <FooterTab navigation = {this.props.navigation}/>
                 </Container>
             </View>
         );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text,View } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
 export default class FooterTabs extends Component {
     state = {
         loading : true
@@ -29,9 +30,9 @@ export default class FooterTabs extends Component {
                   <Icon active name="navigate" />
                   <Text>Navigate</Text>
                 </Button>
-                <Button vertical>
-                  <Icon name="person" />
-                  <Text>Contact</Text>
+                <Button vertical onPress = {() => this.props.navigation.navigate('Feedback')}>
+                  <MaterialIcons name="feedback" size={24} color="white" />
+                  <Text>Feedback</Text>
                 </Button>
               </FooterTab>
             }
