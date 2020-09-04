@@ -25,7 +25,7 @@ export default class HomeScreen extends Component{
        })
 
        Firebase.database().ref('users').once('value' , data => {   //on
-           
+        
        })
 
        Firebase.database().ref('users/001').update({
