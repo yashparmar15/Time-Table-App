@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
-import { Container, Header, Left, Body, Right, Button, Icon, Title,Text } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Icon, Title,Text , Toast,Root } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import {Alert } from 'react-native';
@@ -29,15 +29,14 @@ export default class HeaderCompo extends Component {
 
       logoutUser = () => {
         Alert.alert(
-            "Alert Title",
-            "My Alert Msg",
+            "Logging out..",
+            "Are you sure?",
             [
               {
                 text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
                 style: "cancel"
               },
-              { text: "OK", onPress: () => console.log("OK Pressed") }
+              { text: "Yes", onPress: () => this.logout() }
             ],
             { cancelable: false }
         );
@@ -46,12 +45,20 @@ export default class HeaderCompo extends Component {
       logout = () => {
         this.setState({loggedin : false})
         firebase.auth().signOut();
+        Toast.show({
+            text: "Logout Successfully!",
+            textStyle: { color: "yellow" },
+            type : 'success',
+            position : 'down',
+            buttonText: "Okay",
+            duration : 2000
+          })
       }
 
   render() {
     return (
-    
       <Container style = {{maxHeight : 80}}>
+          <Root >
           {this.state.loading ? <Text>Loading...</Text> : 
             <Header>
             <Left>
@@ -66,13 +73,14 @@ export default class HeaderCompo extends Component {
                 {this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
               <Ionicons name="md-add" size={28} color="white" />
               </Button> : 
-                <Button transparent onPress = {this.logoutUser() }>
+                <Button transparent onPress = {() => this.logoutUser() }>
                 <Entypo name="log-out" size={24} color="white" />
                 </Button>
                   : null}
             </Right>
           </Header>
           }
+          </Root>
       </Container>
     );
   }
