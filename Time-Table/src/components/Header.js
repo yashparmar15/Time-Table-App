@@ -18,6 +18,8 @@ export default class HeaderCompo extends Component {
             if(user){
                 console.log(firebase.auth().currentUser.displayName);
                 this.setState({loggedin : true});
+            } else {
+                this.setState({loggedin : false})
             }
         }))
         await Font.loadAsync({
@@ -71,7 +73,7 @@ export default class HeaderCompo extends Component {
             </Body>
             <Right>
                 {this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
-              <Ionicons name="md-add" size={28} color="white" />
+                <Entypo name="login" size={24} color="white" />
               </Button> : 
                 <Button transparent onPress = {() => this.logoutUser() }>
                 <Entypo name="log-out" size={24} color="white" />

@@ -13,7 +13,6 @@ export default class FeedbackScreen extends Component {
             message : ""
         }
     }
-    componentWillUnmount() { if (Toast.toastInstance != null && Toast.toastInstance.root != null) { Toast.hide(); } }
     submitFeedback = () => {
         if(this.state.name === ""){
             Toast.show({

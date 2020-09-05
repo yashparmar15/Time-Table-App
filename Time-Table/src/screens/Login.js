@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import {Button} from 'react-native';
-import { Container, Content, Form, Item, Input, Label , Toast,Root, Text } from 'native-base';
+import {Image, StyleSheet , TouchableOpacity} from 'react-native';
+import { Container, Content, Form, Item, Input, Label , Toast,Root, Text , Icon , Button} from 'native-base';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import * as Google from 'expo-google-app-auth';
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons';
 export default class LoginScreen extends Component {
     state = {
-        user : "",
-        pass : ""
+        loading : false
     }
     isUserEqual = (googleUser, firebaseUser) => {
         if (firebaseUser) {
@@ -54,9 +54,8 @@ export default class LoginScreen extends Component {
                     })
                 }
                 this.props.navigation.navigate('Home');
-                console.log("Logged in");
             })
-            
+    
             .catch(function(error) {
               // Handle Errors here.
               var errorCode = error.code;
@@ -91,50 +90,37 @@ export default class LoginScreen extends Component {
           return { error: true };
         }
       }
-    componentWillUnmount() { if (Toast.toastInstance != null && Toast.toastInstance.root != null) { Toast.hide(); } }
-    CheckPass = () => {
-        if(this.state.user === ""){
-            Toast.show({
-                text: "Please Enter Username!",
-                textStyle: { color: "yellow" },
-                buttonText: "Okay",
-                duration : 5000
-              })
-            return;
-        }
-
-        if(this.state.user === "admin" && this.state.pass === "yashparmar"){
-            this.props.navigation.navigate('EE301');
-        } else {
-            Toast.show({
-                text: "Wrong password!",
-                textStyle: { color: "yellow" },
-                buttonText: "Okay"
-              })
-            
-        }
-    }
   render() {
     return (
         <Root>
+            {this.state.loading ? <View>Loading....</View>:
       <Container>
-        <Header title = "Login" navigation = {this.props.navigation} show = {false}/>
+            <Header title = "Login" navigation = {this.props.navigation} show = {false}/>
         <Content style = {{margin : 10}}>
             <Text style = {{fontSize : 25 , fontWeight : 'bold' , textAlign : 'center', fontFamily : 'monospace' , marginTop : 50}}>Login to Continue</Text>
-            <Text style = {{color : '#a0a0a0', marginBottom : 30 , marginTop : 5 , fontSize : 14 , textAlign : 'center' , fontFamily : 'monospace' , marginHorizontal : 3}}>Hold on sparky!, currently this page is only for Admin.</Text>
-            <Item stackedLabel>
-              <Label style = {{fontSize : 15 , fontFamily : 'monospace'}}>Username</Label>
-              <Input style = {{borderColor : '#808080' , borderBottomWidth : 1}} value = {this.state.user} onChangeText = {(text) => this.setState({user : text})}/>
-            </Item>
-            <Item stackedLabel last style = {{marginTop : 20}}>
-              <Label style = {{fontSize : 15 , fontFamily : 'monospace'}}>Password</Label>
-              <Input secureTextEntry={true} style = {{marginBottom : 50 , borderColor : '#808080' , borderBottomWidth : 1}} value = {this.state.pass} onChangeText = {(text) => this.setState({pass : text})}/>
-            </Item>
-            <Button style = {{marginTop : 20}} color = "black"  title = "Login"  onPress = {() => this.signInWithGoogleAsync()}></Button>
+            <Text style = {{color : '#a0a0a0', marginBottom : 30 , marginTop : 5 , fontSize : 14 , textAlign : 'center' , fontFamily : 'monospace' , marginHorizontal : 3}}>Please login using IIT Goa Credential</Text>
+            <Image source={require('../../assets/iitgoa.png')} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50 , marginBottom : 40}}/>
+            <TouchableOpacity style = {styles.btnGoogle} onPress = {() => this.signInWithGoogleAsync()}>
+                <AntDesign name="googleplus" size={28} color="white" />
+                <Text style = {{paddingLeft : 10, textAlign : 'center' , fontSize : 18 , color : 'white' , fontWeight : 'bold'}}>Sign In with Google</Text>
+            </TouchableOpacity>
         </Content>
         <Footer navigation = {this.props.navigation}/>
-      </Container>
+      </Container>}
       </Root>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    btnGoogle : {
+        backgroundColor : '#db3236',
+        width : 300,
+        alignSelf : 'center',
+        padding : 12,
+        borderRadius : 8,
+        flexDirection : 'row',
+        alignItems : 'center',
+        justifyContent : 'center'
+    }
+})

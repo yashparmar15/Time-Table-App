@@ -86,7 +86,7 @@ export default class CourseList extends Component {
                 onPress = {() => this.props.navigation.navigate('Home')}
                 style = {{marginTop : 80 , alignSelf : 'center'}}><Text style = {{textAlign : 'center', borderColor : 'black' , borderWidth : 1,padding : 10 , width : 120 , borderRadius : 30}}>Go Back</Text></TouchableOpacity>
         </Content>
-        <Footer/>
+        <Footer navigation = {this.props.navigation}/>
       </Container>
     );
   }

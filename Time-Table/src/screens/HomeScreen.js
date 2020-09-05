@@ -3,7 +3,7 @@ import {StyleSheet ,TouchableOpacity , FlatList , Linking} from 'react-native';
 import { Container, Content, Icon, Accordion, Text, View  , Button} from "native-base";
 import Firebase from '../components/utils/firebase';
 import { Feather } from '@expo/vector-icons';
-import Headers from '../components/Header';
+import Header from '../components/Header';
 import FooterTab from '../components/Footer';
 import LineBreak from '../components/LineBreak';
 
@@ -77,7 +77,7 @@ export default class HomeScreen extends Component{
       render() {
         return (
             <View style = {styles.container}>
-                <Headers title = "Time Table" navigation = {this.props.navigation} show = {true}/>
+                <Header title = "Time Table" navigation = {this.props.navigation} show = {true}/>
                 <Text style = {styles.heading}>Electrical Engineering</Text>
                 <Text style = {styles.batch}>Batch 2018{' '} 
                      <Text style={{color: 'blue' , textDecorationLine : 'underline' , fontWeight : 'bold'}}
