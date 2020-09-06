@@ -13,31 +13,22 @@ export default class FeedbackScreen extends Component {
             name : "",
             message : "",
             working : false,
+            flag : false,
         }
     }
 
     componentDidMount = () => {
         firebase.auth().onAuthStateChanged(user => {
-            if(!user){
-                Alert.alert(
-                    "You are not logged in!",
-                    "Please login to submit your valuable Review",
-                    [
-                        {
-                          text: "Cancel",
-                          style: "cancel"
-                        },
-                        { text: "Ok", onPress: () => this.props.navigation.navigate('Login') }
-                      ],
-                      { cancelable: false }
-                )
-            } else {
+            if(user){
                 this.setState({name : firebase.auth().currentUser.displayName})
+                this.setState({flag : true});
             }
         })
     }
 
     submitFeedback = () => {
+        this.checkuser()
+        if(this.state.flag){
         if(this.state.message === ""){
             Toast.show({
                 text: "Please Enter Message!",
@@ -81,6 +72,32 @@ export default class FeedbackScreen extends Component {
             })
         })
     }
+    }
+
+    checkuser = () => {
+        firebase.auth().onAuthStateChanged(user => {
+            if(!user){
+                Alert.alert(
+                    "You are not logged in!",
+                    "Please login to submit your valuable Review",
+                    [
+                        {
+                          text: "Cancel",
+                          style: "cancel"
+                        },
+                        { text: "Ok", onPress: () => this.props.navigation.navigate('Login') }
+                      ],
+                      { cancelable: false }
+                )
+                return false;
+            } else {
+                this.setState({name : firebase.auth().currentUser.displayName})
+                return true;
+            }
+        })
+        this.setState({working : false});
+    }
+
   render() {
     return (
         <Root>
@@ -95,7 +112,7 @@ export default class FeedbackScreen extends Component {
             <LineBreak text = "" w = {0}/>
             <Item stackedLabel style = {{marginLeft : 10 , marginRight : 10}}>
               <Label style = {{fontSize : 16 ,fontWeight : 'bold' , fontFamily : 'monospace'}}>Full Name</Label>
-              <Input placeholder = "Enter Your Name" style = {{color : '#404040' , fontSize : 15}} disabled value = {this.state.name}/>
+              <Input placeholder = "Enter Your Name" style = {{color : '#404040' , fontSize : 15}} value = {this.state.name} onChangeText = {(text) => this.setState({name : text})} disabled = {this.state.flag}/>
             </Item>
             <Label style = {{fontSize : 16 ,fontWeight : 'bold' , fontFamily : 'monospace',marginLeft : 10 , marginRight : 10 , color : '#707070', marginTop : 20 , marginBottom : 10}}>Message :-</Label>
             <Textarea rowSpan={5} bordered placeholder="Enter Your Message" style = {{marginLeft : 10 , marginRight : 10 , color : '#404040' , fontSize : 15 , padding : 5 , borderRadius : 10 , marginBottom : 25 }} 

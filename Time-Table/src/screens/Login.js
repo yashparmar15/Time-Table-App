@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Image, StyleSheet , TouchableOpacity} from 'react-native';
-import { Container, Content, Form, Item, Input, Label , Toast,Root, Text , Icon , Button} from 'native-base';
+import {Image, StyleSheet , TouchableOpacity, View} from 'react-native';
+import { Container, Content, Form, Item, Input, Label , Toast,Root, Text , Icon , Button , Spinner} from 'native-base';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import * as Google from 'expo-google-app-auth';
@@ -8,7 +8,8 @@ import firebase from 'firebase';
 import { AntDesign } from '@expo/vector-icons';
 export default class LoginScreen extends Component {
     state = {
-        loading : false
+        loading : false,
+        working : false
     }
     isUserEqual = (googleUser, firebaseUser) => {
         if (firebaseUser) {
@@ -72,16 +73,18 @@ export default class LoginScreen extends Component {
         }.bind(this));
       }
      signInWithGoogleAsync = async () => {
+        this.setState({working : true});
         try {
           const result = await Google.logInAsync({
               behavior : 'web',
-            androidClientId: '671031154846-q7gv044sasbsi5e1oqr2osm56nfbibbj.apps.googleusercontent.com',
+            androidClientId: "671031154846-16j5ct84tj3oaqh4mckjdmvu8ui0bhnm.apps.googleusercontent.com",
             // iosClientId: YOUR_CLIENT_ID_HERE,
             scopes: ['profile', 'email'],
           });
       
           if (result.type === 'success') {
               this.onSignIn(result);
+              this.setState({working : false});
             return result.accessToken;
           } else {
             return { cancelled: true };
@@ -97,6 +100,7 @@ export default class LoginScreen extends Component {
       <Container>
             <Header title = "Login" navigation = {this.props.navigation} show = {false}/>
         <Content style = {{margin : 10}}>
+            {this.state.working ? <Spinner color = "blue" /> : <View>
             <Text style = {{fontSize : 25 , fontWeight : 'bold' , textAlign : 'center', fontFamily : 'monospace' , marginTop : 50}}>Login to Continue</Text>
             <Text style = {{color : '#a0a0a0', marginBottom : 30 , marginTop : 5 , fontSize : 14 , textAlign : 'center' , fontFamily : 'monospace' , marginHorizontal : 3}}>Please login using IIT Goa Credential</Text>
             <Image source={require('../../assets/iitgoa.png')} style={{height: 200, width: 200, flex: 1,alignSelf : 'center', borderRadius : 50 , marginBottom : 40}}/>
@@ -104,6 +108,7 @@ export default class LoginScreen extends Component {
                 <AntDesign name="googleplus" size={28} color="white" />
                 <Text style = {{paddingLeft : 10, textAlign : 'center' , fontSize : 18 , color : 'white' , fontWeight : 'bold'}}>Sign In with Google</Text>
             </TouchableOpacity>
+            </View>}
         </Content>
         <Footer navigation = {this.props.navigation}/>
       </Container>}
