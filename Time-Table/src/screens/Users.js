@@ -19,13 +19,13 @@ export default class Users extends Component {
             users : {"a" : [] , "b" : [] , "c" : [] , "d" : [] , "e" : [] , "f" : [] , "g" : [] , "h" : [] , "i" : [] , "j" : [] , "k" : [] , "l" : [] , "m" : [] , "n" : [] , "o" : [] , "p" : [] , "q" : [] , "r" : [] , "s" : [] , "t" : [] , "u" : [] ,"v" : [] , "w" : [] , "x" : [] , "y" : [] , "z" : []},
             loading : true,
             alpha : ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u",'v',"w","x","y","z"],
-            user : ""
         };
       }
 
       actionEvent = (index) => {
-
-            console.log(this.state.user);
+          if(index === 1){
+              this.props.navigation.navigate('Profile',{id : this.state.user});
+          }
       }
 
       componentDidMount = () => {
@@ -66,7 +66,7 @@ export default class Users extends Component {
                                 this.state.users[t].length === 0 ? <Text style = {{textAlign : 'center' , color : '#808080' , marginVertical : 5}}>No Result Found!</Text>:
                                 this.state.users[t].map(dataa => {
                                     return(
-                                        <ListItem key = {dataa.gmail} onPress = {() => this.showActionSheet(dataa.userid)}> 
+                                        <ListItem key = {dataa.gmail} onPress = {() => this.showActionSheet(dataa)}> 
                                             <Left>
                                                 <Text>{dataa.first_name}{' '}{dataa.last_name}</Text>
                                             </Left>
