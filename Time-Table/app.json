@@ -24,7 +24,13 @@
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.example.myapp"
+      "package": "com.example.myapp",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyBJ0N4RtHdV0WtOp7vwFOsVLF37VDt2a94",
+          "certificateHash": "29D64AF6D15357CF72AB0B6D271912162B492B94"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

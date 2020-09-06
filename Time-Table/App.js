@@ -10,6 +10,7 @@ import HS301 from './src/screens/HS301';
 import TT from './src/screens/TT';
 import LoginScreen from './src/screens/Login';
 import FeedbackScreen from './src/screens/FeedbackScreen'; 
+import Users from './src/screens/Users';
 const navigator = createStackNavigator({
   Home : HomeScreen,
   Courses : CourseList,
@@ -20,6 +21,7 @@ const navigator = createStackNavigator({
   HS301 : HS301,
   TT : {screen : TT},
   Feedback : FeedbackScreen,
+  Users : Users,
   Login : { screen : LoginScreen},
 },{
   headerMode : 'none'
