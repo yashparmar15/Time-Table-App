@@ -1,98 +1,95 @@
 import React, { Component } from 'react';
-import {StyleSheet} from 'react-native';
-import { Container, Content, List, ListItem, Text  ,Left , Right , Icon} from 'native-base';
+import {StyleSheet , View} from 'react-native';
+import { Container, Content, List, ListItem, Text  ,Left , Right , Icon , Spinner} from 'native-base';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
-
-
-// var BUTTONS = [
-//     { text: "Option 0", icon: "american-football", iconColor: "#2c8ef4"},
-//     { text: "Option 1", icon: "analytics", iconColor: "#f42ced" },
-//     { text: "Option 2", icon: "aperture", iconColor: "#ea943b" },
-//     { text: "Delete", icon: "trash", iconColor: "#fa213b" },
-//     { text: "Cancel", icon: "close", iconColor: "#25de5b" }
-//   ];
-//   var DESTRUCTIVE_INDEX = 3;
-//   var CANCEL_INDEX = 4;
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
+import firebase from 'firebase';
 
 const options = [
-    'Cancel', 
-    'Apple', 
-    <Text style={{color: 'yellow'}}>Banana</Text>,
-    'Watermelon', 
-    <Text style={{color: 'red'}}>Durian</Text>
+    <Text style={{color: 'red'}}>Cancel</Text>,
+    <Text style={{color: '#1261A0' , fontWeight : '700' , textDecorationLine :'underline'}}>View Profile</Text>,
+    <Text style={{color: '#606060'}}>Send Message</Text>,
   ]
 
 export default class Users extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            users : {"a" : [] , "b" : [] , "c" : [] , "d" : [] , "e" : [] , "f" : [] , "g" : [] , "h" : [] , "i" : [] , "j" : [] , "k" : [] , "l" : [] , "m" : [] , "n" : [] , "o" : [] , "p" : [] , "q" : [] , "r" : [] , "s" : [] , "t" : [] , "u" : [] ,"v" : [] , "w" : [] , "x" : [] , "y" : [] , "z" : []},
+            loading : true,
+            alpha : ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u",'v',"w","x","y","z"],
+            user : ""
+        };
       }
 
-      showActionSheet = () => {
+      actionEvent = (index) => {
+
+            console.log(this.state.user);
+      }
+
+      componentDidMount = () => {
+            var users;
+            firebase.database().ref('users').once('value' , (data) => {
+                users = data.toJSON();
+            }).then((data)=> {
+                for(var key in data.toJSON()){
+                    firebase.database().ref('users/' + key).once('value' , d => {
+                        var t = this.state.users;
+                        var ch = d.toJSON().first_name.toLowerCase();
+                        t[ch[0]].push(d.toJSON());
+                        this.setState({users : t});
+                    })
+                }
+            })
+            this.setState({loading : false});
+      }
+      showActionSheet = (id) => {
+        this.setState({user : id})
         this.ActionSheet.show()
       }
-    openActionSheet = () => {
-        ActionSheet.show(
-            {
-              options: BUTTONS,
-              cancelButtonIndex: CANCEL_INDEX,
-              destructiveButtonIndex: DESTRUCTIVE_INDEX,
-              title: "Choose An Action",
-              cssClass : 'center'
-            },
-            buttonIndex => {
-              this.setState({ clicked: BUTTONS[buttonIndex] });
-            }
-          )
-    }
   render() {
     return (
       <Container>
         <Header show = {true} navigation = {this.props.navigation} title = "All Users"/>
-        <Content>
+        {this.state.loading ? <Spinner color = "blue"/> :
+        <Content >
           <List>
-            <ListItem itemDivider >
-              <Text>A</Text>
-            </ListItem>                    
-            <ListItem onPress = {this.showActionSheet}>
-            <Left>
-                <Text>Simon Mignolet</Text>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" 
-                 />
-              </Right>
-            </ListItem>
-            <ListItem>
-            <Left>
-                <Text>Simon Mignolet</Text>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text>B</Text>
-            </ListItem> 
-            <ListItem> 
-            <Left>
-                <Text>Simon Mignolet</Text>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-              </ListItem>
+                {
+                    this.state.alpha.map(t => {
+                        return(
+                            <View>
+                            <ListItem itemDivider>
+                                <Text>{t.toUpperCase()}</Text>
+                            </ListItem> 
+                            {
+                                this.state.users[t].length === 0 ? <Text style = {{textAlign : 'center' , color : '#808080' , marginVertical : 5}}>No Result Found!</Text>:
+                                this.state.users[t].map(dataa => {
+                                    return(
+                                        <ListItem key = {dataa.gmail} onPress = {() => this.showActionSheet(dataa.userid)}> 
+                                            <Left>
+                                                <Text>{dataa.first_name}{' '}{dataa.last_name}</Text>
+                                            </Left>
+                                            <Right>
+                                                <Icon name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                    )
+                                })
+                            }
+                            </View>
+                        )
+                    })
+                }
           </List>
-        </Content>
+        </Content>}
         <ActionSheet
           ref={o => this.ActionSheet = o}
-          title={<Text style={{color: '#000', fontSize: 18}}>Which one do you like?</Text>}
+          title={<Text style={{color: '#505050', fontSize: 18 , fontWeight : 'bold'}}>Choose An Option</Text>}
           options={options}
           cancelButtonIndex={0}
-          destructiveButtonIndex={4}
-          onPress={(index) => { /* do something */ }}
+          destructiveButtonIndex={2}
+          onPress = {(index) => this.actionEvent(index)}
         />
 
         <Footer navigation = {this.props.navigation}/>
@@ -103,7 +100,4 @@ export default class Users extends Component {
 
 
 const styles = StyleSheet.create({
-    center : {
-        backgroundColor : 'black'
-    }
 })

@@ -46,7 +46,8 @@ export default class LoginScreen extends Component {
                         locale : result.additionalUserInfo.profile.locale,
                         first_name : result.additionalUserInfo.profile.given_name,
                         last_name : result.additionalUserInfo.profile.family_name,
-                        created_at : Date.now()
+                        created_at : Date.now(),
+                        userid : result.user.uid
                     })
                 } else {
                     firebase.database().ref('users/' + result.user.uid)
