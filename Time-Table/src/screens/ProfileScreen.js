@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right , Spinner } from 'native-base';
 import firebase from 'firebase';
+
+let user = null;
 export default class ProfileScreen extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
+
+        state = {
             user : null,
             loading : true
         }
-    }
 
     componentDidMount = () => {
-       this.setState({user : this.props.navigation.getParam('id')})
-       this.setState({loading : false});
+        this.setState({user : this.props.navigation.getParam('id')});
+        this.setState({loading : false});
     }
   render() {
     return (
@@ -27,13 +27,13 @@ export default class ProfileScreen extends Component {
               <Left>
                 <Thumbnail source={{uri: this.state.user.profile_picture}} />
                 <Body>
-                    <Text>{this.state.user.userid}</Text>
+                    <Text>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
                   <Text note>GeekyAnts</Text>
                 </Body>
               </Left>
             </CardItem>
             <CardItem cardBody>
-              <Image source={{uri: this.state.user.profile_picture}} style={{height: 200, width: null, flex: 1}}/>
+              <Image source={{uri: this.state.user.profile_picture}} style={{height: 200, width: 200, flex: 1}}/>
             </CardItem>
             <CardItem>
               <Left>
