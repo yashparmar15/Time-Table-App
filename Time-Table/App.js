@@ -12,6 +12,7 @@ import LoginScreen from './src/screens/Login';
 import FeedbackScreen from './src/screens/FeedbackScreen'; 
 import Users from './src/screens/Users';
 import Profile from './src/screens/ProfileScreen';
+import ChatScreen from './src/screens/ChatScreen';
 const navigator = createStackNavigator({
   Home : HomeScreen,
   Courses : CourseList,
@@ -20,6 +21,7 @@ const navigator = createStackNavigator({
   EE325 : EE325,
   EE308 : EE308,
   HS301 : HS301,
+  Chat : ChatScreen,
   TT : {screen : TT},
   Feedback : FeedbackScreen,
   Users : Users,

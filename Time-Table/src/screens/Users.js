@@ -23,9 +23,21 @@ export default class Users extends Component {
       }
 
       actionEvent = (index) => {
-          if(index === 1){
-              this.props.navigation.navigate('Profile',{id : this.state.user});
-          }
+            let cur ;
+            if(index === 1){
+                this.props.navigation.navigate('Profile',{id : this.state.user});
+            }
+            firebase.auth().onAuthStateChanged(user => {
+                if(!user)
+                    this.props.navigation.navigate('Login');
+                else {
+                    firebase.database().ref('users/' + user.uid).once('value' , data=>{
+                        if(index == 2){
+                            this.props.navigation.navigate('Chat' , {to : this.state.user , from : data.toJSON()});
+                        }
+                    })
+                }
+            })
       }
 
       componentDidMount = () => {

@@ -63,13 +63,15 @@ export default class HeaderCompo extends Component {
           <Root >
           {this.state.loading ? <Text>Loading...</Text> : 
             <Header>
-            <Left>
+              
+              {this.props.mssg !== "Home" ?<Left>
+            
               <Button transparent onPress = {() => this.props.navigation.goBack()}>
                 <Icon name='arrow-back' />
-              </Button>
-            </Left>
+              </Button> 
+            </Left>: null}
             <Body>
-          <Title>{this.props.title}</Title>
+          <Title style = {{marginLeft : 20}}>{this.props.title}</Title>
             </Body>
             <Right>
                 {this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
