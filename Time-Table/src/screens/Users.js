@@ -50,6 +50,7 @@ export default class Users extends Component {
                     firebase.database().ref('users/' + key).once('value' , d => {
                         var t = this.state.users;
                         var ch = d.toJSON().first_name.toLowerCase();
+                        if(d.toJSON().userid !== firebase.auth().currentUser.uid)
                         t[ch[0]].push(d.toJSON());
                         this.setState({users : t});
                     })

@@ -20,6 +20,7 @@ class ChatScreen extends React.Component {
     messages: [],
     title : this.props.navigation.getParam('to').first_name + " " + this.props.navigation.getParam('to').last_name,
     loading : true,
+    from : this.props.navigation.getParam('from').uid,
   };
 
   get user() {
@@ -27,6 +28,7 @@ class ChatScreen extends React.Component {
       name: this.props.navigation.getParam('from').first_name,
       avatar : this.props.navigation.getParam('from').profile_picture,
       _id: Fire.shared.uid,
+
     };
   }
 
