@@ -11,7 +11,7 @@ const dataArray = [
   { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
   { title: "Tuesday", content: ["9:00 AM - 10:00 AM        EE229","10:15 AM - 11:15 AM     EE301","2:00 PM - 3:00 PM         EE325","3:15 PM - 4:15 PM        HS301"] },
   { title: "Wednesday", content: ["10:15 AM - 11:15 AM     EE301","11:30 AM - 12:30 PM    EE308","3:15 PM - 4:15 PM        HS301"] },
-  { title: "Thrusday", content: ["9:00 AM - 10:00 AM        EE229","11:30 AM - 12:30 PM     EE325","2:00 PM - 3:00 PM         EE301"] },
+  { title: "Thursday", content: ["9:00 AM - 10:00 AM        EE229","11:30 AM - 12:30 PM     EE325","2:00 PM - 3:00 PM         EE301"] },
   { title: "Friday", content: ["9:00 AM - 10:00 AM        EE229","10:15 AM - 11:15 AM     EE308","11:30 AM - 12:30 PM     EE325"] }
 ];
 

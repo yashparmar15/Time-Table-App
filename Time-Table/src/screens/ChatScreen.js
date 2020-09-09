@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Fire from '../components/utils/Fire';
 import firebase from 'firebase';
 
-import { View } from 'native-base';
+import { View, Spinner } from 'native-base';
 
 
 
@@ -19,7 +19,7 @@ class ChatScreen extends React.Component {
   state = {
     messages: [],
     title : this.props.navigation.getParam('to').first_name + " " + this.props.navigation.getParam('to').last_name,
-    
+    loading : true,
   };
 
   get user() {
@@ -31,7 +31,10 @@ class ChatScreen extends React.Component {
   }
 
   render() {
-       const chat=<GiftedChat messages={this.state.messages} 
+      let chat;
+      if(this.state.loading) chat = <Spinner color = "blue" />
+      else
+       chat=<GiftedChat messages={this.state.messages} 
        onSend={Fire.shared.send} 
        imageProps = {this.props.navigation.getParam('from').profile_picture}
        alwaysShowSend
@@ -70,8 +73,10 @@ class ChatScreen extends React.Component {
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, message),
         }))
-      );
-
+        
+      )
+      this.setState({loading : false}); 
+      
       
     
   }

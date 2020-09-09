@@ -10,7 +10,7 @@ export default class FooterTabs extends Component {
     state = {
         loading : true,
         loggedin : false,
-        userid : ''
+        userid : '',
     }
     async componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
@@ -35,6 +35,7 @@ export default class FooterTabs extends Component {
 
       sendtoProfile = () => {
         if(this.state.loggedin){
+          console.log("User",this.state.user);
         this.props.navigation.navigate('Profile',{id : this.state.user});
         }
         else{
