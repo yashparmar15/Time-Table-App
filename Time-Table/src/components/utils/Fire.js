@@ -2,8 +2,8 @@ import firebase from 'firebase';
 let chat;
 class Fire {
   constructor() {
-    this.init();
-    this.observeAuth();
+    // this.init();
+    // this.observeAuth();
     this.getChatId();
   }
 
@@ -81,7 +81,7 @@ class Fire {
               firebase.database().ref('messages/' + chat)
                 .limitToLast(1000)
                 .on('child_added', snapshot => callback(this.parse(snapshot)));
-                    })
+                    })  
         }
     });
   }

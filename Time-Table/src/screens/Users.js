@@ -26,6 +26,7 @@ export default class Users extends Component {
             let cur ;
             if(index === 1){
                 this.props.navigation.navigate('Profile',{id : this.state.user});
+                return;
             }
             firebase.auth().onAuthStateChanged(user => {
                 if(!user)

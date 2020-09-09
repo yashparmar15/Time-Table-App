@@ -27,7 +27,7 @@ export default class FeedbackScreen extends Component {
     }
 
     submitFeedback = () => {
-        this.checkuser()
+        // this.checkuser()
         if(this.state.flag){
         if(this.state.message === ""){
             Toast.show({

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text,View } from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text,View} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import {Alert} from 'react-native';
 import firebase from 'firebase';
 export default class FooterTabs extends Component {
     state = {
@@ -15,6 +16,7 @@ export default class FooterTabs extends Component {
         firebase.auth().onAuthStateChanged(user => {
             if(user){
               this.setState({userid : user.uid});
+              this.setState({loggedin : true});
             }
         })
         await Font.loadAsync({
@@ -32,7 +34,42 @@ export default class FooterTabs extends Component {
       }
 
       sendtoProfile = () => {
+        if(this.state.loggedin){
         this.props.navigation.navigate('Profile',{id : this.state.user});
+        }
+        else{
+        Alert.alert(
+          "You are not logged in!",
+          "Please login to continue",
+          [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Ok", onPress: () => this.props.navigation.navigate('Login') }
+            ],
+            { cancelable: false }
+      )
+          }
+      }
+      sendToFeedback = () => {
+        if(this.state.loggedin){
+        this.props.navigation.navigate('Feedback');
+        }
+        else{
+        Alert.alert(
+          "You are not logged in!",
+          "Please login to continue",
+          [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Ok", onPress: () => this.props.navigation.navigate('Login') }
+            ],
+            { cancelable: false }
+      )
+          }
       }
 
   render() {
@@ -53,7 +90,7 @@ export default class FooterTabs extends Component {
                   <Icon active name="navigate" />
                   <Text style = {{fontSize : 9}}>Navigate</Text>
                 </Button>
-                <Button vertical onPress = {() => this.props.navigation.navigate('Feedback')}>
+                <Button vertical onPress = {() => this.sendToFeedback()}>
                   <MaterialIcons name="feedback" size={20} color="white" />
                   <Text style = {{fontSize : 9}}>Feedback</Text>
                 </Button>
