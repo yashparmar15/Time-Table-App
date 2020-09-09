@@ -75,7 +75,7 @@ export default class Users extends Component {
                                 <Text>{t.toUpperCase()}</Text>
                             </ListItem> 
                             {
-                                this.state.users[t].length === 0 ? <Text style = {{textAlign : 'center' , color : '#808080' , marginVertical : 5}}>No Result Found!</Text>:
+                                this.state.users[t].length === 0 ? <Text style = {{textAlign : 'center' , color : '#808080' , marginVertical : 5}}>No Results Found!</Text>:
                                 this.state.users[t].map(dataa => {
                                     return(
                                         <ListItem key = {dataa.gmail} onPress = {() => this.showActionSheet(dataa)}> 

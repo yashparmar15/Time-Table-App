@@ -58,6 +58,10 @@ export default class HeaderCompo extends Component {
       }
 
   render() {
+    var mar = 20;
+    if(this.props.showlogout === "Chat")
+      mar = 0;
+
     return (
       <Container style = {{maxHeight : 80}}>
           <Root >
@@ -71,8 +75,9 @@ export default class HeaderCompo extends Component {
               </Button> 
             </Left>: null}
             <Body>
-          <Title style = {{marginLeft : 20}}>{this.props.title}</Title>
+          <Title style = {{marginLeft : mar}}>{this.props.title}</Title>
             </Body>
+            {this.props.showlogout !== "Chat" ?
             <Right>
                 {this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
                 <Entypo name="login" size={24} color="white" />
@@ -81,7 +86,7 @@ export default class HeaderCompo extends Component {
                 <Entypo name="log-out" size={24} color="white" />
                 </Button>
                   : null}
-            </Right>
+            </Right>:null}
           </Header>
           }
           </Root>

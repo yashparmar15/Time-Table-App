@@ -1,9 +1,25 @@
 import firebase from 'firebase';
-
+let chat;
 class Fire {
   constructor() {
     this.init();
     this.observeAuth();
+    this.getChatId();
+  }
+
+  getChatId = () => {
+      let id;
+      firebase.auth().onAuthStateChanged(user => {
+          if(user){
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value', data => {
+                id = data.toJSON().chatid;
+            }).then(()=> {
+                chat = id;
+                console.log(chat);
+                return id;
+            })
+          }
+      });
   }
 
   init = () => {
@@ -39,7 +55,7 @@ class Fire {
   }
 
   get ref() {
-    return firebase.database().ref('messages');
+    return firebase.database().ref('messages/' + chat);
   }
 
   parse = snapshot => {
@@ -55,22 +71,36 @@ class Fire {
     return message;
   };
 
-  on = callback =>
-    this.ref
-      .limitToLast(20)
-      .on('child_added', snapshot => callback(this.parse(snapshot)));
+  on = callback =>{
+    firebase.auth().onAuthStateChanged(user => {
+        if(user){
+          firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value', data => {
+              id = data.toJSON().chatid;
+          }).then(()=> {
+              chat = id;
+              firebase.database().ref('messages/' + chat)
+                .limitToLast(1000)
+                .on('child_added', snapshot => callback(this.parse(snapshot)));
+                    })
+        }
+    });
+  }
 
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
   }
   // send the message to the Backend
+   getDateStringServ = timestamp => {
+    let date = new Date(Date.now());
+    return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+  }
   send = messages => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
       const message = {
         text,
         user,
-        timestamp: this.timestamp,
+        timestamp: this.getDateStringServ(this.timestamp),
       };
       this.append(message);
     }
