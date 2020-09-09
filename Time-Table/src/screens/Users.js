@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet , View} from 'react-native';
-import { Container, Content, List, ListItem, Text  ,Left , Right , Icon , Spinner} from 'native-base';
+import { Container, Content, List, ListItem, Text  ,Left , Right , Icon , Spinner, Thumbnail} from 'native-base';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
@@ -79,10 +79,12 @@ export default class Users extends Component {
                             {
                                 this.state.users[t].length === 0 ? <Text style = {{textAlign : 'center' , color : '#808080' , marginVertical : 5}}>No Results Found!</Text>:
                                 this.state.users[t].map(dataa => {
+                                    console.log(dataa);
                                     return(
                                         <ListItem key = {dataa.gmail} onPress = {() => this.showActionSheet(dataa)}> 
                                             <Left>
-                                                <Text>{dataa.first_name}{' '}{dataa.last_name}</Text>
+                                                <Thumbnail circular source={{uri: dataa.profile_picture}} small/>
+                                                <Text style = {{marginLeft : 10}}>{dataa.first_name}{' '}{dataa.last_name}</Text>
                                             </Left>
                                             <Right>
                                                 <Icon name="arrow-forward" />

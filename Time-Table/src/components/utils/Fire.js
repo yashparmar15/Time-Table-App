@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import React from 'react';
+import {View,Text} from 'react-native';
 let chat;
 class Fire {
   constructor() {
@@ -102,6 +104,12 @@ class Fire {
         user,
         timestamp: this.getDateStringServ(this.timestamp),
       };
+    // const message = (
+    //     <View>
+    //         <Text>{text}</Text>
+    //         <Text>{this.getDateStringServ(this.timestamp)}</Text>
+    //     </View>
+    // )
       this.append(message);
     }
   };
