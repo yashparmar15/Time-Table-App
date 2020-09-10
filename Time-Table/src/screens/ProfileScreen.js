@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Image , View } from 'react-native';
+import { Image , View , Modal , StyleSheet , TouchableHighlight } from 'react-native';
 import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right , Spinner , Header , Title } from 'native-base';
 import firebase from 'firebase';
 import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const options = [
   <Text style={{color: 'red'}}>Cancel</Text>,
   <Text style={{color: '#606060'}}>Edit Cover Photo</Text>,
@@ -16,7 +17,8 @@ export default class ProfileScreen extends Component {
         state = {
             user : null,
             loading : true,
-            title : ''
+            title : '',
+            modalVisible: false,
         }
 
         uriToBlob = (uri) => {
@@ -117,17 +119,7 @@ export default class ProfileScreen extends Component {
                 this.handleOnPress();
                 return;
             }
-            firebase.auth().onAuthStateChanged(user => {
-                if(!user)
-                    this.props.navigation.navigate('Login');
-                else {
-                    firebase.database().ref('users/' + user.uid).once('value' , data=>{
-                        if(index == 2){
-                            this.props.navigation.navigate('Chat' , {to : this.state.user , from : data.toJSON()});
-                        }
-                    })
-                }
-            })
+            
       }
       profileMenu = () => {
         this.ActionSheet.show()
@@ -166,15 +158,79 @@ export default class ProfileScreen extends Component {
           onPress = {(index) => this.actionEvent(index)}
         />
           </Header>
+
         {this.state.loading ? <Spinner color = "blue" /> :
         <Content>
-            <View>
+            <TouchableOpacity onPress = {() => this.setState({modalVisible : true})}>
 
-            {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{width : null , height : 160  , resizeMode : 'cover' }}/> : <Image source={require('../../assets/cover.jpg')} style = {{width : null , height : 160  , resizeMode : 'cover'}}/>}
+            {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{width : null , height : 160  , resizeMode : 'cover' }} /> : <Image source={require('../../assets/cover.jpg')}  style = {{width : null , height : 160  , resizeMode : 'cover'}}/>}
             
-            </View>
-        </Content>}
+            </TouchableOpacity>
+        
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+              <Text style = {{fontSize : 20 , fontWeight : 'bold' , marginBottom : 15}}>Cover Photo</Text>
+          {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{resizeMode : 'contain' , width : 300 , height : 400}} /> : <Image source={require('../../assets/cover.jpg')}/>}
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" , marginTop : 20 }}
+              onPress={() => {
+                this.setState({modalVisible : false})
+              }}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+      </Content>}
       </Container>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5
+    },
+    openButton: {
+      backgroundColor: "#F194FF",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
+  });
