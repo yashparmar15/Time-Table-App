@@ -79,7 +79,10 @@ export default class HeaderCompo extends Component {
             </Body>
             {this.props.showlogout !== "Chat" ?
             <Right>
-                {this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
+                {this.props.n === "menu" ?  
+                 <Button transparent >
+                 <Entypo name="menu" size={24} color="white" onPress = {() => this.profileMenu}/>
+                 </Button> : this.props.show ? !this.state.loggedin ? <Button transparent onPress = {() => this.props.navigation.navigate('Login')}>
                 <Entypo name="login" size={24} color="white" />
               </Button> : 
                 <Button transparent onPress = {() => this.logoutUser() }>

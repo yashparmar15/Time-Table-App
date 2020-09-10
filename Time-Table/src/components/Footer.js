@@ -35,8 +35,9 @@ export default class FooterTabs extends Component {
 
       sendtoProfile = () => {
         if(this.state.loggedin){
-          console.log("User",this.state.user);
+          console.log(this.state.user);
         this.props.navigation.navigate('Profile',{id : this.state.user});
+        return;
         }
         else{
         Alert.alert(
