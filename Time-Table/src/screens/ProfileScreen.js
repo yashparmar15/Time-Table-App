@@ -50,13 +50,15 @@ export default class ProfileScreen extends Component {
         
           }
         
-          uploadToFirebase = (blob) => {
+          uploadToFirebase = (blob,index) => {
         
             return new Promise((resolve, reject)=>{
 
                 var storageRef = firebase.storage().ref();
                 let imgurl = firebase.auth().currentUser.uid + ".jpg";
-                storageRef.child('uploads/' + imgurl).put(blob, {
+                let path = 'uploads/';
+                if(index == 2) path = 'profile/'
+                storageRef.child(path + imgurl).put(blob, {
                   contentType: 'image/jpeg'
                 }).then((snapshot)=>{
           
@@ -75,7 +77,7 @@ export default class ProfileScreen extends Component {
           }      
         
         
-          handleOnPress = () => { 
+          handleOnPress = (index) => { 
             console.log("Clicked")
             ImagePicker.launchImageLibraryAsync({ 
               mediaTypes: "Images"
@@ -90,22 +92,37 @@ export default class ProfileScreen extends Component {
         
             }).then((blob)=>{
         
-              return this.uploadToFirebase(blob);
+              return this.uploadToFirebase(blob,index);
         
             }).then((snapshot)=>{
                 this.setState({loading : true});
                 let img = firebase.auth().currentUser.uid + ".jpg";
-                const ref = firebase.storage().ref('uploads/' + img);
+                let path = 'uploads/';
+                if(index == 2)
+                    path = 'profile/'
+                const ref = firebase.storage().ref(path + img);
                 ref.getDownloadURL().then((url) => {
-                    firebase.database().ref('users/' + firebase.auth().currentUser.uid).update({
-                        cover_photo : url
-                    }).then(()=> {
-                        firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value',data => {
-                            this.setState({user : data.toJSON()});
+                    if(index === 1){
+                        firebase.database().ref('users/' + firebase.auth().currentUser.uid).update({
+                           cover_photo : url,
                         }).then(()=> {
-                            this.setState({loading : false});
+                            firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value',data => {
+                                this.setState({user : data.toJSON()});
+                            }).then(()=> {
+                                this.setState({loading : false});
+                            })
                         })
-                    })
+                    } else {
+                        firebase.database().ref('users/' + firebase.auth().currentUser.uid).update({
+                            profile_picture : url,
+                         }).then(()=> {
+                             firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value',data => {
+                                 this.setState({user : data.toJSON()});
+                             }).then(()=> {
+                                 this.setState({loading : false});
+                             })
+                         })
+                    }
                 })
               console.log("File uploaded");
            
@@ -117,13 +134,9 @@ export default class ProfileScreen extends Component {
         
           }
           actionEvent = (index) => {
-            let cur ;
-            if(index === 1){
-                this.handleOnPress();
-                return;
-            }
-            
-      }
+              this.setState({loading : true});
+                this.handleOnPress(index);
+        }
       profileMenu = () => {
         if(this.state.isSameUser)
         this.ActionSheet.show()
@@ -175,10 +188,11 @@ export default class ProfileScreen extends Component {
 
             <View style = {{elevation : 100 , zIndex : 2}} onStartShouldSetResponder = {() => this.setState({modalVisible2 : true})}>
             
-                <Image source = {{uri : this.state.user.profile_picture}} style = {{ width : 120 , height : 120 , borderRadius : 60 , marginTop : -60 ,borderWidth : 5 , borderColor : 'white' , marginLeft : 5}}/>
+                <Image source = {{uri : this.state.user.profile_picture}} style = {{ width : 120 , height : 120 , borderRadius : 60 , marginTop : -60 ,borderWidth : 5 , borderColor : 'white' , marginLeft : 10}}/>
            
             </View>
-            <Text style = {{marginTop : 0 , marginLeft : 5 , fontSize : 22 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
+            <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : -10}}><Text style = {{color : 'black' , fontWeight : '700'}}>Send Message</Text></TouchableOpacity>
+            <Text style = {{marginTop : 0 , marginLeft : 10 , fontSize : 22 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
             
         <Modal
         animationType="slide"
