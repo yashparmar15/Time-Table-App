@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Image , View , Modal , StyleSheet , TouchableHighlight , Alert } from 'react-native';
-import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right , Spinner , Header , Title } from 'native-base';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right , Spinner , Header , Title , Textarea } from 'native-base';
 import firebase from 'firebase';
 import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import { isSameUser } from 'react-native-gifted-chat/lib/utils';
 import LineBreak from '../components/LineBreak';
 const options = [
@@ -23,6 +23,8 @@ export default class ProfileScreen extends Component {
             modalVisible: false,
             isSameUser : false,
             modalVisible2 : false,
+            modalVisible3 : false,
+            
         }
 
         uriToBlob = (uri) => {
@@ -58,7 +60,7 @@ export default class ProfileScreen extends Component {
                 var storageRef = firebase.storage().ref();
                 let imgurl = firebase.auth().currentUser.uid + ".jpg";
                 let path = 'uploads/';
-                if(index == 2) path = 'profile/'
+                if(index === 2) path = 'profile/'
                 storageRef.child(path + imgurl).put(blob, {
                   contentType: 'image/jpeg'
                 }).then((snapshot)=>{
@@ -135,8 +137,12 @@ export default class ProfileScreen extends Component {
         
           }
           actionEvent = (index) => {
-              this.setState({loading : true});
+              
+              if(index === 2 || index === 1){
+                this.setState({loading : true});
                 this.handleOnPress(index);
+              }
+            
         }
       profileMenu = () => {
         if(this.state.isSameUser)
@@ -144,10 +150,18 @@ export default class ProfileScreen extends Component {
       }
         
     async componentDidMount() {
-        await this.setState({user : this.props.navigation.getParam('id')})
+        await firebase.database().ref('users/' + this.props.navigation.getParam('userid')).once('value', data => {
+                this.setState({user : data.toJSON()});
+        })
         if(firebase.auth().currentUser)
             this.setState({isSameUser : this.state.user.userid === firebase.auth().currentUser.uid})
         console.log(this.props.navigation.getParam('id'));
+        if(!this.state.user.aboutme){
+            this.setState({about : "Student at Indian Institute of Technology Goa"});
+        }
+        else
+            this.setState({about : this.state.user.aboutme});
+        this.setState({len : this.state.about.length})
         this.setState({loading : false});
     }
 
@@ -195,7 +209,7 @@ export default class ProfileScreen extends Component {
           title={<Text style={{color: '#505050', fontSize: 18 , fontWeight : 'bold'}}>Choose An Option</Text>}
           options={options}
           cancelButtonIndex={0}
-          destructiveButtonIndex={2}
+          destructiveButtonIndex={4}
           onPress = {(index) => this.actionEvent(index)}
         />
           </Header>
@@ -215,10 +229,10 @@ export default class ProfileScreen extends Component {
            
             </View>
             {!this.state.isSameUser ? 
-            <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 20 , backgroundColor : '#0073b1' , padding : 7 }} onPress = {()=> this.sendtoChat()}><Text style = {{color : 'white' , fontWeight : '700'}}>Send Message</Text></TouchableOpacity> : <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 50 , backgroundColor : '#0073b1' , padding : 7 }}><Text style = {{color : 'white' , fontWeight : '700'}}>Edit About Me</Text></TouchableOpacity>}
+            <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 20 , backgroundColor : '#0073b1' , padding : 7 }} onPress = {()=> this.sendtoChat()}><Text style = {{color : 'white' , fontWeight : '700'}}>Send Message</Text></TouchableOpacity> : <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 50 , backgroundColor : '#0073b1' , padding : 7 }} onPress = {() => this.setState({modalVisible3 : true})}><Text style = {{color : 'white' , fontWeight : '700'}}>Edit About Me</Text></TouchableOpacity>}
             </View>
             <Text style = {{marginTop : 0 , marginLeft : 10 , fontSize : 22 , width : 200 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
-            <Text style = {{marginLeft : 10 , color : '#808080',marginRight : 20}}>{!this.state.user.aboutme ? 'Student at Indian Institute of Technology Goa' : this.state.user.aboutme}</Text>
+            <Text style = {{marginLeft : 10 , color : '#808080',marginRight : 20}}>{this.state.about}</Text>
             <LineBreak w = {0}/>
         <Modal
         animationType="slide"
@@ -262,6 +276,35 @@ export default class ProfileScreen extends Component {
               }}
             >
               <Text style={styles.textStyle}>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.modalVisible3}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style = {{fontSize : 20 , fontWeight : 'bold' , marginBottom : 15}}>Update About Me</Text>
+
+              <Textarea style = {{width : 300}} rowSpan={5} bordered value= {this.state.about} onChangeText = {(text) => {if(text.length <= 150){this.setState({about : text}); this.setState({len : text.length})}}}/>
+                <Text style = {{fontSize : 15  , marginTop : 10}}>Remaining : {150 - this.state.len}</Text>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" , marginTop : 20 }}
+              onPress={() => {
+                firebase.database().ref('users/' + this.state.user.userid).update({
+                    aboutme : this.state.about
+                }).then(()=> {
+                    this.setState({modalVisible3 : false});
+                })
+              }}
+            >
+              <Text style={styles.textStyle}>Update</Text>
             </TouchableHighlight>
           </View>
         </View>
