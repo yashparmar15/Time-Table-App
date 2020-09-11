@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const options = [
   <Text style={{color: 'red'}}>Cancel</Text>,
   <Text style={{color: '#606060'}}>Edit Cover Photo</Text>,
-  <Text style={{color: '#606060'}}>Send Message</Text>,
+  <Text style={{color: '#606060'}}>Edit Profile Photo</Text>,
 ]
 export default class ProfileScreen extends Component {
 
@@ -19,6 +19,7 @@ export default class ProfileScreen extends Component {
             loading : true,
             title : '',
             modalVisible: false,
+            isSameUser : false
         }
 
         uriToBlob = (uri) => {
@@ -122,13 +123,14 @@ export default class ProfileScreen extends Component {
             
       }
       profileMenu = () => {
+        if(this.state.isSameUser)
         this.ActionSheet.show()
       }
         
     async componentDidMount() {
-        await firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value',data => {
-            this.setState({user : data.toJSON()});
-        })
+        await this.setState({user : this.props.navigation.getParam('id')})
+        if(firebase.auth().currentUser)
+            this.setState({isSameUser : this.state.user.userid === firebase.auth().currentUser.uid})
         this.setState({loading : false});
     }
   render() {
@@ -166,6 +168,7 @@ export default class ProfileScreen extends Component {
             {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{width : null , height : 160  , resizeMode : 'cover' }} /> : <Image source={require('../../assets/cover.jpg')}  style = {{width : null , height : 160  , resizeMode : 'cover'}}/>}
             
             </TouchableOpacity>
+
         
         <Modal
         animationType="slide"

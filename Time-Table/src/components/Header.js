@@ -63,30 +63,6 @@ export default class HeaderCompo extends Component {
           })
       }
 
-      profileMenu = () => {
-        this.ActionSheet.show()
-      }
-
-      actionEvent = (index) => {
-        let cur ;
-        if(index === 1){
-            console.log("Hello");
-            this.props.onclick1;
-            return;
-        }
-        firebase.auth().onAuthStateChanged(user => {
-            if(!user)
-                this.props.navigation.navigate('Login');
-            else {
-                firebase.database().ref('users/' + user.uid).once('value' , data=>{
-                    if(index == 2){
-                        this.props.navigation.navigate('Chat' , {to : this.state.user , from : data.toJSON()});
-                    }
-                })
-            }
-        })
-  }
-
   render() {
     var mar = 20;
     if(this.props.showlogout === "Chat")
@@ -122,14 +98,6 @@ export default class HeaderCompo extends Component {
             </Right>:null}
           </Header>
           }
-          <ActionSheet
-          ref={o => this.ActionSheet = o}
-          title={<Text style={{color: '#505050', fontSize: 18 , fontWeight : 'bold'}}>Choose An Option</Text>}
-          options={options}
-          cancelButtonIndex={0}
-          destructiveButtonIndex={2}
-          onPress = {(index) => this.actionEvent(index)}
-        />
           </Root>
           
       </Container>

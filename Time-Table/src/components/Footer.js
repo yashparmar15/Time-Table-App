@@ -23,19 +23,18 @@ export default class FooterTabs extends Component {
             Roboto: require('native-base/Fonts/Roboto.ttf'),
             Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
           });
-        this.setState({loading : false});
-        this.getUser();
+          this.getUser();
+          this.setState({loading : false});
       }
 
-      getUser = () => {
-        firebase.database().ref('users/' + this.state.userid).once('value' , data => {
+      async getUser() {
+        await firebase.database().ref('users/' + this.state.userid).once('value' , data => {
           this.setState({user : data.toJSON()});
         })
       }
 
       sendtoProfile = () => {
         if(this.state.loggedin){
-          console.log(this.state.user);
         this.props.navigation.navigate('Profile',{id : this.state.user});
         return;
         }
