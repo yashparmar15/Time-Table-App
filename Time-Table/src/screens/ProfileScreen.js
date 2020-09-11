@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { isSameUser } from 'react-native-gifted-chat/lib/utils';
 const options = [
   <Text style={{color: 'red'}}>Cancel</Text>,
   <Text style={{color: '#606060'}}>Edit Cover Photo</Text>,
@@ -19,7 +20,8 @@ export default class ProfileScreen extends Component {
             loading : true,
             title : '',
             modalVisible: false,
-            isSameUser : false
+            isSameUser : false,
+            modalVisible2 : false,
         }
 
         uriToBlob = (uri) => {
@@ -131,6 +133,7 @@ export default class ProfileScreen extends Component {
         await this.setState({user : this.props.navigation.getParam('id')})
         if(firebase.auth().currentUser)
             this.setState({isSameUser : this.state.user.userid === firebase.auth().currentUser.uid})
+        console.log(this.props.navigation.getParam('id'));
         this.setState({loading : false});
     }
   render() {
@@ -163,13 +166,20 @@ export default class ProfileScreen extends Component {
 
         {this.state.loading ? <Spinner color = "blue" /> :
         <Content>
-            <TouchableOpacity onPress = {() => this.setState({modalVisible : true})}>
 
-            {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{width : null , height : 160  , resizeMode : 'cover' }} /> : <Image source={require('../../assets/cover.jpg')}  style = {{width : null , height : 160  , resizeMode : 'cover'}}/>}
+            <View  style = {{elevation : -1 , zIndex : 1}} onStartShouldSetResponder = {() => this.setState({modalVisible : true})}>
+                {this.state.user.cover_photo ? <Image source={{uri : this.state.user.cover_photo}} style = {{width : null , height : 160  , resizeMode : 'cover'}} /> : <Image source={require('../../assets/cover.jpg')}  style = {{width : null , height : 160  , resizeMode : 'cover' , zIndex : 1 }}/>}
+
+            </View>
+
+
+            <View style = {{elevation : 100 , zIndex : 2}} onStartShouldSetResponder = {() => this.setState({modalVisible2 : true})}>
             
-            </TouchableOpacity>
-
-        
+                <Image source = {{uri : this.state.user.profile_picture}} style = {{ width : 120 , height : 120 , borderRadius : 60 , marginTop : -60 ,borderWidth : 5 , borderColor : 'white' , marginLeft : 5}}/>
+           
+            </View>
+            <Text style = {{marginTop : 0 , marginLeft : 5 , fontSize : 22 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
+            
         <Modal
         animationType="slide"
         transparent={true}
@@ -186,6 +196,29 @@ export default class ProfileScreen extends Component {
               style={{ ...styles.openButton, backgroundColor: "#2196F3" , marginTop : 20 }}
               onPress={() => {
                 this.setState({modalVisible : false})
+              }}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.modalVisible2}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+              <Text style = {{fontSize : 20 , fontWeight : 'bold' , marginBottom : 15}}>Profile Photo</Text>
+              <Image source = {{uri : this.state.user.profile_picture}} style = {{ width : 300 , height : 300 , resizeMode : 'contain'}}/>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" , marginTop : 20 }}
+              onPress={() => {
+                this.setState({modalVisible2 : false})
               }}
             >
               <Text style={styles.textStyle}>Close</Text>
