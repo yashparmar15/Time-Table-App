@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image , View , Modal , StyleSheet , TouchableHighlight } from 'react-native';
+import { Image , View , Modal , StyleSheet , TouchableHighlight , Alert } from 'react-native';
 import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right , Spinner , Header , Title } from 'native-base';
 import firebase from 'firebase';
 import { Entypo } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { isSameUser } from 'react-native-gifted-chat/lib/utils';
+import LineBreak from '../components/LineBreak';
 const options = [
   <Text style={{color: 'red'}}>Cancel</Text>,
   <Text style={{color: '#606060'}}>Edit Cover Photo</Text>,
@@ -149,6 +150,28 @@ export default class ProfileScreen extends Component {
         console.log(this.props.navigation.getParam('id'));
         this.setState({loading : false});
     }
+
+    sendtoChat = () => {
+        if(!firebase.auth().currentUser){
+            Alert.alert(
+                "You are not logged in!",
+                "Please login to continue",
+                [
+                    {
+                      text: "Cancel",
+                      style: "cancel"
+                    },
+                    { text: "Ok", onPress: () => this.props.navigation.navigate('Login') }
+                  ],
+                  { cancelable: false }
+            )
+
+        }else{
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value',data => {
+                this.props.navigation.navigate('Chat' , {to : this.state.user , from : data.toJSON()});
+            })
+        }
+    }
   render() {
     
     return (
@@ -185,15 +208,18 @@ export default class ProfileScreen extends Component {
 
             </View>
 
-
-            <View style = {{elevation : 100 , zIndex : 2}} onStartShouldSetResponder = {() => this.setState({modalVisible2 : true})}>
+            <View style = {{flexDirection : 'row' , justifyContent : 'space-between'}}>
+            <View style = {{width : 120,elevation : 100 , zIndex : 2 , alignSelf : 'flex-start'}} onStartShouldSetResponder = {() => this.setState({modalVisible2 : true})}>
             
                 <Image source = {{uri : this.state.user.profile_picture}} style = {{ width : 120 , height : 120 , borderRadius : 60 , marginTop : -60 ,borderWidth : 5 , borderColor : 'white' , marginLeft : 10}}/>
            
             </View>
-            <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : -10}}><Text style = {{color : 'black' , fontWeight : '700'}}>Send Message</Text></TouchableOpacity>
-            <Text style = {{marginTop : 0 , marginLeft : 10 , fontSize : 22 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
-            
+            {!this.state.isSameUser ? 
+            <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 20 , backgroundColor : '#0073b1' , padding : 7 }} onPress = {()=> this.sendtoChat()}><Text style = {{color : 'white' , fontWeight : '700'}}>Send Message</Text></TouchableOpacity> : <TouchableOpacity style = {{alignSelf : 'flex-end' , marginTop : 10 , marginRight : 50 , backgroundColor : '#0073b1' , padding : 7 }}><Text style = {{color : 'white' , fontWeight : '700'}}>Edit About Me</Text></TouchableOpacity>}
+            </View>
+            <Text style = {{marginTop : 0 , marginLeft : 10 , fontSize : 22 , width : 200 }}>{this.state.user.first_name}{' '}{this.state.user.last_name}</Text>
+            <Text style = {{marginLeft : 10 , color : '#808080',marginRight : 20}}>{!this.state.user.aboutme ? 'Student at Indian Institute of Technology Goa' : this.state.user.aboutme}</Text>
+            <LineBreak w = {0}/>
         <Modal
         animationType="slide"
         transparent={true}
