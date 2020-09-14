@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Item, Input , Text , Label ,Textarea, Spinner } from 'native-base';
+import { Container, Content, Item, Input , Text , Label ,Textarea, Spinner , Toast } from 'native-base';
 import {TouchableOpacity , View} from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -81,6 +81,7 @@ export default class AddPost extends Component {
     
     
       handleOnPress = () => { 
+          this.setState({loading : true});
         ImagePicker.launchImageLibraryAsync({ 
           mediaTypes: "Images"
         }).then((result)=>{ 
@@ -103,6 +104,7 @@ export default class AddPost extends Component {
             ref.getDownloadURL().then((url) => {
                 this.setState({url : url})
             })
+            this.setState({loading : false});
           console.log("File uploaded",this.state.url);
        
         }).catch((error)=>{
@@ -129,12 +131,21 @@ export default class AddPost extends Component {
               userpic : this.state.user.profile_picture,
               name : this.state.user.first_name + " " + this.state.user.last_name,
               url : this.state.url,
-              postid : pid
+              postid : pid,
+              comments : [{}],
+              order : -pid
           }).then(() => {
               this.setState({url : ""});
               this.setState({title : ""});
               this.setState({description : ""});
               this.setState({et : ""});
+              Toast.show({
+                text: "Successfully added!",
+                textStyle: { color: "yellow" },
+                buttonText: "Okay",
+                type :'success',
+                position : 'top'
+              })
           })
 
 
@@ -159,7 +170,7 @@ export default class AddPost extends Component {
                 <Textarea style = {{fontSize : 16 , color : '#808080' , borderColor : '#707070' , borderWidth : 1 , borderRadius : 10 , padding : 5}} rowSpan={5} bordered placeholder="Add Description" value = {this.state.description} onChangeText = {(text) => this.setState({description : text})} />
                 <Label style = {{fontSize : 18 , color : '#404040' ,fontWeight : 'bold' , marginTop : 10}}>Add Photo</Label>
                 <TouchableOpacity style = {{width : null , backgroundColor : '#f0f0f0' , padding : 10 , borderRadius : 10 }} onPress = {() => this.handleOnPress()}>
-                    <Text style = {{textAlign : 'center' , color : '#404040' , fontWeight : '700'}}>Add Photo</Text>
+                    <Text style = {{textAlign : 'center' , color : '#404040' , fontWeight : '700'}}>{this.state.url === "" ? "Add Photo" : "Change Photo"}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style = {{width : null , backgroundColor : '#000' , padding : 10 , borderRadius : 10 , marginTop : 20 }} onPress = {() => this.submitpost()}>
                     <Text style = {{textAlign : 'center' , color : '#fff' , fontWeight : '700'}}>Submit Post</Text>
