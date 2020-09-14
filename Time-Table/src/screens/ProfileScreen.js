@@ -8,6 +8,7 @@ import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import { isSameUser } from 'react-native-gifted-chat/lib/utils';
 import LineBreak from '../components/LineBreak';
+import Footer from '../components/Footer';
 const options = [
   <Text style={{color: 'red'}}>Cancel</Text>,
   <Text style={{color: '#606060'}}>Edit Cover Photo</Text>,
@@ -310,6 +311,7 @@ export default class ProfileScreen extends Component {
         </View>
       </Modal>
       </Content>}
+      <Footer navigation = {this.props.navigation}/>
       </Container>
     );
   }

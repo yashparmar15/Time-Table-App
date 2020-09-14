@@ -14,6 +14,7 @@ import Users from './src/screens/Users';
 import Profile from './src/screens/ProfileScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import Posts from './src/screens/Posts';
+import AddPost from './src/screens/AddPost';
 const navigator = createStackNavigator({
   Home : HomeScreen,
   Courses : CourseList,
@@ -28,7 +29,8 @@ const navigator = createStackNavigator({
   Users : Users,
   Login : { screen : LoginScreen},
   Profile : Profile,
-  Posts : Posts
+  Posts : Posts,
+  AddPost : AddPost
 },{
   headerMode : 'none'
 }
