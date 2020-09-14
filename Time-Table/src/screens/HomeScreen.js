@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import Header from '../components/Header';
 import FooterTab from '../components/Footer';
 import LineBreak from '../components/LineBreak';
+import { Entypo } from '@expo/vector-icons';
 
 const dataArray = [
   { title: "Monday", content: ["10:15 AM - 11:15 AM    EE308","3:15 PM - 4:15 PM        HS301"] },
@@ -127,6 +128,6 @@ const styles = StyleSheet.create({
         fontWeight : '300',
         textAlign : 'center',
         marginBottom : 30
-    }
+    },
 })
 

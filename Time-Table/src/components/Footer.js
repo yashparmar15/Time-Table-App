@@ -6,6 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import {Alert} from 'react-native';
 import firebase from 'firebase';
+import { Entypo } from '@expo/vector-icons';
 export default class FooterTabs extends Component {
     state = {
         loading : true,
@@ -88,9 +89,9 @@ export default class FooterTabs extends Component {
                   <Text style = {{fontSize : 9}}>Users</Text>
                 </Button>
                 
-                <Button vertical active>
-                  <Icon active name="navigate" />
-                  <Text style = {{fontSize : 9}}>Navigate</Text>
+                <Button vertical onPress = {() => this.props.navigation.navigate('Posts')}>
+                <Entypo name="info-with-circle" size={20} color="white"/>
+                  <Text style = {{fontSize : 9}}>Posts</Text>
                 </Button>
                 <Button vertical onPress = {() => this.sendToFeedback()}>
                   <MaterialIcons name="feedback" size={20} color="white" />
