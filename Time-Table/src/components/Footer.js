@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Font from 'expo-font';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text,View} from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text,View, Spinner} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -12,6 +12,8 @@ export default class FooterTabs extends Component {
         loading : true,
         loggedin : false,
         userid : '',
+        posts : [],
+        lforposts :false
     }
     async componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
@@ -75,8 +77,27 @@ export default class FooterTabs extends Component {
           }
       }
 
+      async sendToPosts(){
+        this.setState({lforposts : true});
+          await firebase.database().ref('posts').once('value' , (data) => {
+            for(var key in data.toJSON()){
+                firebase.database().ref('posts/' + key).on('value' , d => {
+                    var t;
+                    t = this.state.posts;
+                    t.push(d.toJSON());
+                    this.setState({posts : t});
+                })
+            }
+          })
+
+          this.setState({lforposts : false});
+          this.props.navigation.navigate('Posts' , {'posts' : this.state.posts.reverse()});
+      }
+
   render() {
     return (
+      <View>
+        {this.state.lforposts ? <Text style = {{textAlign : 'center' , justifyContent : 'center' , textAlignVertical : 'center' , marginBottom : 10 , color : '#808080'}}>Hold on ,We are taking you there..</Text>:
         <Footer>
             {this.state.loading ? <View></View> : 
                 <FooterTab>
@@ -89,7 +110,7 @@ export default class FooterTabs extends Component {
                   <Text style = {{fontSize : 9}}>Users</Text>
                 </Button>
                 
-                <Button vertical onPress = {() => this.props.navigation.navigate('Posts')}>
+                <Button vertical onPress = {() => this.sendToPosts()}>
                 <Entypo name="info-with-circle" size={20} color="white"/>
                   <Text style = {{fontSize : 9}}>Posts</Text>
                 </Button>
@@ -100,6 +121,8 @@ export default class FooterTabs extends Component {
               </FooterTab>
             }
         </Footer>
+  }
+        </View>
     );
   }
 }

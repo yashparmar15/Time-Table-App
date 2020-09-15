@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image , StyleSheet , TouchableOpacity, Dimensions } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body , Spinner} from 'native-base';
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body , Spinner, Right} from 'native-base';
 import {Entypo} from '@expo/vector-icons';
 import firebase from 'firebase';
 import { FontAwesome } from '@expo/vector-icons';
@@ -10,24 +10,46 @@ export default class CardShowcaseExample extends Component {
 
     state = {
         posts : [],
-        loading : true
+        loading : false,
     }
 
-    componentDidMount =()=> {
-        this.setState({loading : true})
-        firebase.database().ref('posts').once('value' , (data) => {
-            for(var key in data.toJSON()){
-                firebase.database().ref('posts/' + key).on('value' , d => {
-                    var t;
-                    t = this.state.posts;
-                    t.push(d.toJSON());
-                    this.setState({posts : t});
-                })
-            }
-        }).then(() => {
-            this.state.posts.reverse();
-            this.setState({loading : false})
-        })
+
+
+    async componentDidMount (){
+        console.log(this.props.navigation.navigate('posts'),"Posts");
+        this.setState({posts : this.props.navigation.getParam('posts')});;
+    }
+
+    // fetchdata (){
+    //     this.setState({loading : true})
+    //     firebase.database().ref('posts').once('value' , (data) => {
+    //         for(var key in data.toJSON()){
+    //             firebase.database().ref('posts/' + key).on('value' , d => {
+    //                 var t;
+    //                 t = this.state.posts;
+    //                 t.push(d.toJSON());
+    //                 this.setState({posts : t});
+    //             })
+    //         }
+    //     }).then(() => {
+    //         let t = this.state.posts;
+    //         t.reverse();
+    //         this.setState({posts : t});
+    //     }).then(()=> {
+    //         this.setState({loading : false})
+    //     })
+    // }
+
+    async deletePost(id){
+        this.setState({loading : true});
+        let t = this.state.posts;
+        var s = t.filter(function (t){
+            return t.postid !== id;
+        });
+        console.log(s);
+        this.setState({posts : s})
+        await firebase.database().ref('posts/' + id).remove();
+        this.setState({loading : false});
     }
 
   render() {
@@ -38,6 +60,7 @@ export default class CardShowcaseExample extends Component {
         <Content>
             {this.state.posts.map(data => {{
                 return(
+                    
                 <Card key = {data.postid}>
                 <CardItem>
                   <Left>
@@ -61,9 +84,14 @@ export default class CardShowcaseExample extends Component {
                   <Left>
                     <Button transparent textStyle={{color: '#87838B'}}>
                     <FontAwesome name="comments" size={24} color="black" />
-                        <Text>View Comments()</Text>
+                        <Text>Comments()</Text>
                     </Button>
                   </Left>
+                  {firebase.auth().currentUser && (firebase.auth().currentUser.uid === "h3XMO2YedfVTidhTlso2kKjfeP93" || firebase.auth().currentUser.uid === "PIigCG6hA6gvZcHWuWAX7MhfGFq1") ? <Right>
+                    <Button transparent textStyle={{color: 'red'}} onPress = {() => this.deletePost(data.postid)}>
+                            <Text style = {{color : 'red'}}>Delete Post</Text>
+                        </Button>
+                  </Right> : null}
                 </CardItem>
               </Card>
                 )
